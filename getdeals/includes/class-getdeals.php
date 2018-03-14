@@ -154,8 +154,8 @@ class GetDeals {
 
 		$plugin_admin = new GetDeals_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'menu_links' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu' );
 
 	}
 
@@ -170,8 +170,11 @@ class GetDeals {
 
 		$plugin_public = new GetDeals_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'getdeals_custom_css' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		add_shortcode( 'getdeals-search-form', array( $plugin_public, 'getdeals_search_form' ) );
+		add_shortcode( 'getdeals-search-results', array( $plugin_public, 'getdeals_search_results' ) );
 
 	}
 

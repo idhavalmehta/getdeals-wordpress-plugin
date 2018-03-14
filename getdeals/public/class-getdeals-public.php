@@ -53,12 +53,6 @@ class GetDeals_Public {
 		$this->version = $version;
 
 	}
-	
-	public function enqueue_styles() {
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/getdeals-public.css', array(), $this->version, 'all' );
-
-	}
 
 	public function enqueue_scripts() {
 
@@ -72,9 +66,60 @@ class GetDeals_Public {
 
 	}
 
-	public function register_shortcodes() {
+	public function getdeals_custom_css() {
 
+		echo '<style type="text/css">
+.gd-loader {
+	width: 50px;
+    height: 50px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #f3f3f3;
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>';
 
+		$option = get_option( 'getdeals_configuration' );
+		echo '<style type="text/css">' . $option[ 'custom-css' ] . '</style>';
+
+	}
+
+	public function getdeals_search_form( $atts ) {
+
+		$atts = shortcode_atts( array(
+			'action' => '',
+		), $atts );
+
+		$html = <<<HTML
+<form action="{$atts[ 'action' ]}" class="gd-search-form">
+	<input type="search" name="q" class="gd-search-field-q" placeholder="What are you looking for?" />
+	<input type="hidden" name="category" value="all" class="gd-search-field-category" />
+	<input type="hidden" name="sort" value="relevance" class="gd-search-field-sort" />
+	<input type="hidden" name="page" value="1" class="gd-search-field-page" />
+	<span class="gd-search-button"><input type="submit" value="Search" /></span>
+</form>
+HTML;
+
+		return $html;
+
+	}
+
+	public function getdeals_search_results() {
+
+		$html = <<<HTML
+<div class="gd-search-results"></div>
+<div class="gd-search-status">
+	<div class="gd-loader"></div>
+</div>
+HTML;
+
+		return $html;
 
 	}
 

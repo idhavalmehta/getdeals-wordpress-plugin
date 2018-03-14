@@ -54,53 +54,7 @@ class GetDeals_Admin {
 
 	}
 
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in GetDeals_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The GetDeals_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/getdeals-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in GetDeals_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The GetDeals_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/getdeals-admin.js', array( 'jquery' ), $this->version, false );
-
-	}
-
-	public function menu_links() {
+	public function create_menu() {
 
 		add_submenu_page( 
 			'options-general.php', 
@@ -165,18 +119,9 @@ class GetDeals_Admin {
 
 	public function page_getdeals() {
 		
-		// check user capabilities
 		if ( !current_user_can( 'manage_options' ) ) {
 			return;
 		}
-
-		// add error/update messages
-		/*if ( isset( $_GET[ 'settings-updated' ] ) ) {
-			add_settings_error( 'getdeals_messages', 'getdeals_message', 'Settings Saved', 'updated' );
-		}
-
-		// show error/update messages
-		settings_errors( 'getdeals_messages' );*/
 		
 		?>
 		
@@ -228,34 +173,13 @@ class GetDeals_Admin {
 
 		$field = $args[ 'field' ];
 		$options = get_option( 'getdeals_configuration' );
+		$value = $options[ $field ];
 
 		?>
 
 		<textarea name="getdeals_configuration[<?php echo esc_attr( $field ); ?>]" rows="10" cols="50" class="large-text code"><?php echo $value; ?></textarea>
 
 		<?php
-
-	}
-
-	public function add_help_screen_to_books(){
-
-		/*$current_screen = get_current_screen();
-
-		if ( $current_screen->id == 'settings_page_getdeals' ) {
-
-			$current_screen->add_help_tab( array(
-				'id'        => 'help_api_credentials',
-				'title'     => 'API Credentials',
-				'content'   => '',
-			) );
-
-			$current_screen->add_help_tab( array(
-				'id'        => 'help_custom_css',
-				'title'     => 'Custom CSS',
-				'content'   => '',
-			) );
-
-		}*/
 
 	}
 
