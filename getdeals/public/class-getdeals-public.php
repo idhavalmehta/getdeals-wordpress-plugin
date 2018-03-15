@@ -83,6 +83,9 @@ class GetDeals_Public {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+[class^="gd-api-status-"] {
+	display: none;
+}
 </style>';
 
 		$option = get_option( 'getdeals_configuration' );
@@ -113,9 +116,28 @@ HTML;
 	public function getdeals_search_results() {
 
 		$html = <<<HTML
-<div class="gd-search-results"></div>
+<div class="gd-search-results">
+	
+</div>
 <div class="gd-search-status">
-	<div class="gd-loader"></div>
+	<div class="gd-api-status-load">
+		<div class="gd-loader"></div>
+	</div>
+	<div class="gd-api-status-more">
+		<button class="gd-load-more-button">Load More Results</button>
+	</div>
+	<div class="gd-api-status-last">
+		<button class="gd-no-more-button" disabled>No More Results</button>
+	</div>
+	<div class="gd-api-status-none">
+		<p class="gd-status-title">No Results Found</p>
+		<p>We couldn't find any results for your search query. Please try a different search query.</p>
+	</div>
+	<div class="gd-api-status-error">
+		<p class="gd-status-title">Unknown Error</p>
+		<p>Something went wrong while getting the results. Please try again.</p>
+		<button class="gd-try-again-button">Try Again</button>
+	</div>
 </div>
 HTML;
 
