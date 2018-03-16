@@ -54,6 +54,11 @@ class GetDeals_Public {
 
 	}
 
+	/**
+	 * Enqueue required JavaScript scripts.
+	 *
+	 * @since    1.0.0
+	 */
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( 'getdeals-unserialize', plugin_dir_url( __FILE__ ) . 'js/unserialize.js', array( 'jquery' ), $this->version, false );
@@ -65,6 +70,12 @@ class GetDeals_Public {
 		wp_add_inline_script( 'getdeals-script', 'getdeals("' . $email . '", "' . $token . '");' );
 
 	}
+
+	/**
+	 * Output inline styles.
+	 *
+	 * @since    1.0.0
+	 */
 
 	public function getdeals_custom_css() {
 
@@ -89,9 +100,15 @@ class GetDeals_Public {
 </style>';
 
 		$option = get_option( 'getdeals_configuration' );
-		echo '<style type="text/css">' . $option[ 'custom-css' ] . '</style>';
+		echo '<style type="text/css">' . strip_tags( $option[ 'custom-css' ] ) . '</style>';
 
 	}
+
+	/**
+	 * Output the GetDeals search form.
+	 *
+	 * @since    1.0.0
+	 */
 
 	public function getdeals_search_form( $atts ) {
 
@@ -112,6 +129,12 @@ HTML;
 		return $html;
 
 	}
+
+	/**
+	 * Output the search results components.
+	 *
+	 * @since    1.0.0
+	 */
 
 	public function getdeals_search_results() {
 
